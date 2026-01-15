@@ -6,6 +6,8 @@ import 'package:solid_qr_app/features/history/data/repositories/shared_prefs_sto
 import 'package:solid_qr_app/features/history/domain/repositories/storage_repository.dart';
 import 'package:solid_qr_app/features/history/presentation/bloc/history_bloc.dart';
 import 'package:solid_qr_app/features/home/presentation/pages/main_page.dart';
+import 'package:solid_qr_app/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:solid_qr_app/features/settings/presentation/bloc/settings_state.dart';
 import 'package:solid_qr_app/features/sharing/data/repositories/share_plus_repository.dart';
 import 'package:solid_qr_app/features/sharing/domain/repositories/share_repository.dart';
 import 'package:solid_qr_app/l10n/app_localizations.dart';
@@ -35,21 +37,26 @@ class SolidQrApp extends StatelessWidget {
               storageRepository: context.read<StorageRepository>(),
             ),
           ),
+          BlocProvider<SettingsBloc>(create: (context) => SettingsBloc()),
         ],
-        child: MaterialApp(
-          title: 'Solid QR App',
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: ThemeMode.system,
-          locale: const Locale('en'),
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: const MainPage(),
+        child: BlocBuilder<SettingsBloc, SettingsState>(
+          builder: (context, settingsState) {
+            return MaterialApp(
+              title: 'Solid QR App',
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: ThemeMode.system,
+              locale: settingsState.locale,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              home: const MainPage(),
+            );
+          },
         ),
       ),
     );

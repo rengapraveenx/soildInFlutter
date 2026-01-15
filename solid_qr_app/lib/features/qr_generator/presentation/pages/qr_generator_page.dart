@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:solid_qr_app/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:solid_qr_app/features/settings/presentation/bloc/settings_event.dart';
 import 'package:solid_qr_app/features/sharing/domain/repositories/share_repository.dart';
 
 import '../../../../l10n/app_localizations.dart';
@@ -31,7 +33,20 @@ class QrGeneratorView extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.qrGenerator ?? 'QR Generator')),
+      appBar: AppBar(
+        title: Text(l10n?.qrGenerator ?? 'QR Generator'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => const _LanguageSelector(),
+              );
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -55,16 +70,32 @@ class QrGeneratorView extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 16),
-                    // Simple Color Selector (Mocking a picker)
-                    Row(
-                      children: [
-                        Text(l10n?.selectColor ?? 'Color: '),
-                        const SizedBox(width: 8),
-                        _ColorOption(color: Colors.black),
-                        _ColorOption(color: Colors.red),
-                        _ColorOption(color: Colors.blue),
-                        _ColorOption(color: Colors.green),
-                      ],
+                    // Simple Color Selector
+                    BlocBuilder<QrGeneratorBloc, QrGeneratorState>(
+                      builder: (context, state) {
+                        return Row(
+                          children: [
+                            Text(l10n?.selectColor ?? 'Color: '),
+                            const SizedBox(width: 8),
+                            _ColorOption(
+                              color: Colors.black,
+                              isSelected: state.color == Colors.black,
+                            ),
+                            _ColorOption(
+                              color: Colors.red,
+                              isSelected: state.color == Colors.red,
+                            ),
+                            _ColorOption(
+                              color: Colors.blue,
+                              isSelected: state.color == Colors.blue,
+                            ),
+                            _ColorOption(
+                              color: Colors.green,
+                              isSelected: state.color == Colors.green,
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -201,7 +232,8 @@ class QrGeneratorView extends StatelessWidget {
 
 class _ColorOption extends StatelessWidget {
   final Color color;
-  const _ColorOption({required this.color});
+  final bool isSelected;
+  const _ColorOption({required this.color, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -216,8 +248,73 @@ class _ColorOption extends StatelessWidget {
         decoration: BoxDecoration(
           color: color,
           shape: BoxShape.circle,
-          border: Border.all(color: Colors.grey.withValues(alpha: 0.5)),
+          border: Border.all(
+            color: isSelected
+                ? Theme.of(context).primaryColor
+                : Colors.grey.withValues(alpha: 0.5),
+            width: isSelected ? 2 : 1,
+          ),
         ),
+        child: isSelected
+            ? const Icon(Icons.check, size: 20, color: Colors.white)
+            : null,
+      ),
+    );
+  }
+}
+
+class _LanguageSelector extends StatelessWidget {
+  const _LanguageSelector();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Select Language',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 16),
+          ListTile(
+            title: const Text('English'),
+            onTap: () {
+              context.read<SettingsBloc>().add(
+                const ChangeLocale(Locale('en')),
+              );
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text('Tamil (தமிழ்)'),
+            onTap: () {
+              context.read<SettingsBloc>().add(
+                const ChangeLocale(Locale('ta')),
+              );
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text('Malayalam (മലയാളം)'),
+            onTap: () {
+              context.read<SettingsBloc>().add(
+                const ChangeLocale(Locale('ml')),
+              );
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text('Kannada (ಕನ್ನಡ)'),
+            onTap: () {
+              context.read<SettingsBloc>().add(
+                const ChangeLocale(Locale('kn')),
+              );
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
     );
   }
