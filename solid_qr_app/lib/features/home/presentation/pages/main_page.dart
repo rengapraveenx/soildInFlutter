@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../dashboard/presentation/pages/dashboard_page.dart';
 import '../../../history/presentation/pages/history_page.dart';
 import '../../../qr_generator/presentation/pages/qr_generator_page.dart';
 import '../../../qr_scanner/presentation/pages/scanner_page.dart';
@@ -25,6 +26,34 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
+      appBar: AppBar(title: Text(l10n?.appTitle ?? 'Solid QR App')),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+              child: const Text(
+                'Solid QR Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.dashboard),
+              title: const Text('Dashboard (Multi-Bloc Demo)'),
+              onTap: () {
+                Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DashboardPage(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
