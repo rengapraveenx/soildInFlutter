@@ -1,0 +1,17 @@
+{
+  "@@locale": "en",
+  "appTitle": "SOLID QR",
+  "qrGenerator": "QR Generator",
+  "qrScanner": "QR Scanner",
+  "enterText": "Enter Text",
+  "generate": "Generate",
+  "history": "History",
+  "save": "Save",
+  "saved": "Saved",
+  "share": "Share",
+  "scan": "Scan",
+  "selectColor": "Select Color",
+  "save": "Save",
+  "theme": "Theme",
+  "language": "Language"
+}

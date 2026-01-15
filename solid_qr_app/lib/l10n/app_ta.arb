@@ -1,0 +1,14 @@
+{
+  "@@locale": "ta",
+  "appTitle": "SOLID QR",
+  "qrGenerator": "QR உருவாக்கி",
+  "qrScanner": "QR ஸ்கேனர்",
+  "enterText": "உரையை உள்ளிடவும்",
+  "generate": "உருவாக்கு",
+  "history": "வரலாறு",
+  "save": "சேமி",
+  "saved": "சேமிக்கப்பட்டது",
+  "share": "பகிர்",
+  "scan": "ஸ்கேன்",
+  "selectColor": "நிறத்தை தேர்ந்தெடு"
+}

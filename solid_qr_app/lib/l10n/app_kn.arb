@@ -1,0 +1,14 @@
+{
+  "@@locale": "kn",
+  "appTitle": "SOLID QR",
+  "qrGenerator": "QR ಜನರೇಟರ್",
+  "qrScanner": "QR ಸ್ಕ್ಯಾನರ್",
+  "enterText": "ಪಠ್ಯವನ್ನು ನಮೂದಿಸಿ",
+  "generate": "ರಚಿಸಿ",
+  "history": "ಇತಿಹಾಸ",
+  "save": "ಉಳಿಸಿ",
+  "saved": "ಉಳಿಸಲಾಗಿದೆ",
+  "share": "ಹಂಚಿಕೊಳ್ಳಿ",
+  "scan": "ಸ್ಕ್ಯಾನ್",
+  "selectColor": "ಬಣ್ಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+}
